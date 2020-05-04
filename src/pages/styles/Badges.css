@@ -10,15 +10,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #ffffff;
+  color: floralwhite
 }
 
 .Badges__container {
   width: 100%;
-  max-width: 580px;
-  margin: 0 auto;
-  padding: 0 1rem;
- 
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .Badges_conf-logo {
@@ -27,6 +26,6 @@
 
 .Badges__buttons {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
+  justify-content: center;
+  margin: 1rem;
 }

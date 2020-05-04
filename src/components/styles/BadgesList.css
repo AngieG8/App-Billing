@@ -1,13 +1,24 @@
 .BadgesList ul>li {
   margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  height: 35%;
+  width: 24%;
+  margin: 1em;
 }
 
 .BadgesListItem {
+  display: flex;
+  flex-wrap: nowrap;
   background: #FFFFFF;
+  flex-direction: row;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.23);
   border-radius: 5px;
   display: flex;
   padding: 1rem;
+  width: 100%;
+  margin: 1em;
 }
 
 .BadgesListItem__avatar {
@@ -16,4 +27,32 @@
   margin-right: 0.5rem;
   width: 80px;
   height: 80px;
+}
+
+
+.BadgesList {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.list-unstyled {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 337px;
+  width: 100%;
+  
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
 }

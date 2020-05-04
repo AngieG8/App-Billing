@@ -5,18 +5,10 @@ class BadgeForm extends React.Component {
     console.log('Button was clicked');
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    console.log('Form was submitted');
-    console.log(this.state);
-  };
-
   render() {
     return (
       <div>
-        <h1>Nueva Factura</h1>
-
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.props.onSubmit}>
           <div className="form-group">
             <label>Nombre Provedor/Empresa </label>
             <input
@@ -24,7 +16,7 @@ class BadgeForm extends React.Component {
               className="form-control"
               type="text"
               name="firstName"
-              value={this.props.formValues.NombreProvedor}
+              value={this.props.formValues.firstName}
             />
           </div>
 
@@ -33,8 +25,8 @@ class BadgeForm extends React.Component {
             <input
               onChange={this.props.onChange}
               className="form-control"
-              type="text"
-              name="lastName"
+              type="number"
+              name="Nit"
               value={this.props.formValues.Nit}
             />
           </div>
@@ -44,8 +36,8 @@ class BadgeForm extends React.Component {
             <input
               onChange={this.props.onChange}
               className="form-control"
-              type="email"
-              name="email"
+              type="number"
+              name="Valor"
               value={this.props.formValues.Valor}
             />
           </div>
@@ -56,25 +48,39 @@ class BadgeForm extends React.Component {
               onChange={this.props.onChange}
               className="form-control"
               type="text"
-              name="jobTitle"
+              name="ModoPago"
               value={this.props.formValues.ModoPago}
             />
           </div>
-
+          
           <div className="form-group">
             <label>Fecha de Pago</label>
             <input
               onChange={this.props.onChange}
               className="form-control"
-              type="text"
-              name="twitter"
-              value={this.props.formValues.FechaPago}
+              type="date"
+              name="FechaFactura"
+              value={this.props.formValues.FechaFactura}
+            />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              onChange={this.props.onChange}
+              className="form-control"
+              type="email"
+              name="email"
+              value={this.props.formValues.email}
             />
           </div>
 
           <button onClick={this.handleClick} className="btn btn-primary">
             Save
           </button>
+
+          {this.props.error && (
+            <p className="text-danger">{this.props.error.message}</p>
+          )}
         </form>
       </div>
     );

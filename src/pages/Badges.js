@@ -2,86 +2,55 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import './styles/Badges.css';
-import confLogo from '../images/badge-header.svg';
 import BadgesList from '../components/BadgesList';
+import PageLoading from '../components/PageLoading';
+import PageError from '../components/PageError';
+import MiniLoader from '../components/MiniLoader';
+import api from '../api';
 
 class Badges extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log('1. constructor()');
-
-    this.state = {
-      data: [],
-    };
-  }
+  state = {
+    loading: true,
+    error: null,
+    data: undefined,
+  };
 
   componentDidMount() {
-    console.log('3. componentDidMount()');
+    this.fetchData();
 
-    this.timeoutId = setTimeout(() => {
-      this.setState({
-        data: [
-          {
-            id: '2de30c42-9deb-40fc-a41f-05e62b5939a7',
-            firstName: 'Mision Servir SAS',
-            lastName: '',
-            FechaFactura: '01/05/2020',
-            DiasVencer: '12',
-            Valor: '$1.200.000',
-            avatarUrl:
-              'https://gravatar.com/avatar/5fefeaf39d4c520912b836080cb22c72?s=400&d=mp&r=x',
-          },
-          {
-            id: 'd00d3614-101a-44ca-b6c2-0be075aeed3d',
-            firstName: 'Document',
-            lastName: '',
-            FechaFactura: '01/05/2020',
-            DiasVencer: '2',
-            Valor: '$2.321.654',
-            avatarUrl:
-              'https://gravatar.com/avatar/5fefeaf39d4c520912b836080cb22c72?s=400&d=mp&r=x',
-          },
-          {
-            id: '63c03386-33a2-4512-9ac1-354ad7bec5e9',
-            firstName: 'Mensajeria Express',
-            lastName: '',
-            FechaFactura: '01/05/2020',
-            DiasVencer: '12',
-            Valor: '$8.321.120',
-            avatarUrl:
-              'https://gravatar.com/avatar/5fefeaf39d4c520912b836080cb22c72?s=400&d=mp&r=x',
-          },
-        ],
-      });
-    }, 3000);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('5. componentDidUpdate()');
-    console.log({
-      prevProps: prevProps,
-      prevState: prevState,
-    });
-
-    console.log({
-      props: this.props,
-      state: this.state,
-    });
+    this.intervalId = setInterval(this.fetchData, 5000);
   }
 
   componentWillUnmount() {
-    console.log('6. componentWillUnmount');
-    clearTimeout(this.timeoutId);
+    clearInterval(this.intervalId);
   }
 
+  fetchData = async () => {
+    this.setState({ loading: true, error: null });
+
+    try {
+      const data = await api.badges.list();
+      this.setState({ loading: false, data: data });
+    } catch (error) {
+      this.setState({ loading: false, error: error });
+    }
+  };
+
   render() {
-    console.log('2/4. render()');
+    if (this.state.loading === true && !this.state.data) {
+      return <PageLoading />;
+    }
+
+    if (this.state.error) {
+      return <PageError error={this.state.error} />;
+    }
+
     return (
       <React.Fragment>
         <div className="Badges">
           <div className="Badges__hero">
             <div className="Badges__container">
-            <h1>Billing</h1>
+          <h1>Registered companies</h1>
             </div>
           </div>
         </div>
@@ -94,6 +63,8 @@ class Badges extends React.Component {
           </div>
 
           <BadgesList badges={this.state.data} />
+
+          {this.state.loading && <MiniLoader />}
         </div>
       </React.Fragment>
     );
